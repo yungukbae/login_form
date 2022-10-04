@@ -1,28 +1,32 @@
-import { todos } from "./axios";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import { todoInstance } from "./axios";
 import { setInterceptors } from "./interceptors";
 
-function createTodo(token: string, text: string) {
-  const authInstance = setInterceptors(todos, token);
-  return authInstance.post("/", { todo: text });
-}
+const useTodo = () => {
+  const { token } = useContext(AuthContext);
+  const AuthorizedInstance = setInterceptors(todoInstance, token);
 
-function getTodos(token: string) {
-  const authInstance = setInterceptors(todos, token);
-  return authInstance.get("/");
-}
+  function createTodo(text: string) {
+    return AuthorizedInstance.post("/", { todo: text });
+  }
 
-function updateTodo(
-  token: string,
-  id: number,
-  body: { todo: string; isCompleted: boolean }
-) {
-  const authInstance = setInterceptors(todos, token);
-  return authInstance.put(`/${id}`, body);
-}
+  function getTodos() {
+    return AuthorizedInstance.get("/");
+  }
 
-function deleteTodo(token: string, id: number) {
-  const authInstance = setInterceptors(todos, token);
-  return authInstance.delete(`/${id}`);
-}
+  function updateTodo(
+    id: number,
+    body: { todo: string; isCompleted: boolean }
+  ) {
+    return AuthorizedInstance.put(`/${id}`, body);
+  }
 
-export { createTodo, getTodos, updateTodo, deleteTodo };
+  function deleteTodo(id: number) {
+    return AuthorizedInstance.delete(`/${id}`);
+  }
+
+  return { createTodo, getTodos, updateTodo, deleteTodo };
+};
+
+export default useTodo;

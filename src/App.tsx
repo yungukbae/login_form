@@ -2,14 +2,16 @@ import { useState } from "react";
 import { SignUpUser } from "./api/auth";
 import AuthProvider from "./context/AuthProvider";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
-import SignIn from "./router/SignIn";
+import SignInPage from "./router/SignInPage";
+import SignUp from "./router/SingUp";
+import TodoContainer from "./router/todo/TodoContainer";
 
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<SignIn />} />
-      <Route path="/page1" element={<div>page1</div>} />
-      <Route path="/page2" element={<div>page2</div>} />
+      <Route path="/" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/todos" element={<TodoContainer />} />
       <Route path="/page3" element={<div>page3</div>} />
     </Routes>
   );
