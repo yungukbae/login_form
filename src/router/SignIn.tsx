@@ -1,7 +1,35 @@
+import { Theme } from "@emotion/react";
+import {
+  Button,
+  Container,
+  Paper,
+  styled,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useContext, useState } from "react";
 import { SignUpUser } from "../api/auth";
 import { createTodo } from "../api/todo";
 import { AuthContext } from "../context/AuthProvider";
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  padding: theme.spacing(5),
+  backgroundColor: "#fff",
+}));
+
+const CustomInput = styled(TextField)(({ theme }) => ({
+  marginBottom: theme.spacing(1),
+  "& input": {
+    padding: theme.spacing(1.5),
+  },
+}));
+
+const CustomLabel = styled(Typography)(({ theme }) => ({
+  fontSize: "16px",
+  fontWeight: 600,
+}));
 
 const SignIn = () => {
   const { token, getToken } = useContext(AuthContext);
@@ -40,14 +68,39 @@ const SignIn = () => {
   };
 
   return (
-    <>
-      <label htmlFor="email">Email</label>
-      <input onChange={handleId} id="email" type="text" />
-      <label htmlFor="password">PW</label>
-      <input onChange={handlePW} id="password" type="text" />
-      <button onClick={handleSubmit}>Submit</button>
-      <button onClick={create}>CreateTodo</button>
-    </>
+    <Container
+      sx={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <CustomPaper sx={{ width: "400px" }}>
+        <Typography
+          variant="h4"
+          sx={{
+            width: "100%",
+            height: "100px",
+            textAlign: "center",
+            lineHeight: "100px",
+          }}
+        >
+          로그인
+        </Typography>
+        <CustomLabel>이메일</CustomLabel>
+        <CustomInput onChange={handleId} id="email" type="text" />
+        <CustomLabel>비밀번호</CustomLabel>
+        <CustomInput onChange={handlePW} id="password" type="text" />
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
+          sx={{ marginTop: "30px" }}
+        >
+          로그인
+        </Button>
+      </CustomPaper>
+    </Container>
   );
 };
 
