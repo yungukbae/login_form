@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function createInstance(url?: string) {
+function createInstance(url: string = "") {
   return axios.create({
     baseURL: `${process.env.REACT_APP_BASE_URL}${url}`,
   });

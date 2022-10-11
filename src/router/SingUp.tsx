@@ -1,28 +1,25 @@
 import React, { useContext, useState } from "react";
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
 import { Button, Container, Typography } from "@mui/material";
-import { AuthContext } from "../context/AuthProvider";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
 const SignUp = () => {
-  const { SignUp } = useContext(AuthContext);
-
   const [userInfo, setuserInfo] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     }
   );
+  const auth = useAuth();
 
-  const handleId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setuserInfo({ email: e.target.value, password: userInfo.password });
-  };
-
-  const handlePW = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setuserInfo({ password: e.target.value, email: userInfo.email });
+  const handleInput = (input: { [x: string]: string }) => {
+    setuserInfo({ ...userInfo, ...input });
   };
 
   const handleSubmit = async () => {
-    const res = await SignUp(userInfo);
+    const res = await auth.SignUp(userInfo);
+    console.log(res);
   };
 
   return (
@@ -47,15 +44,34 @@ const SignUp = () => {
           회원가입
         </Typography>
         <CustomLabel>이메일</CustomLabel>
-        <CustomInput onChange={handleId} id="email" type="text" />
+        <CustomInput
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInput({ email: e.target.value })
+          }
+          id="email"
+          type="text"
+        />
         <CustomLabel>비밀번호</CustomLabel>
-        <CustomInput onChange={handlePW} id="password" type="text" />
-        <Button onClick={handleSubmit} fullWidth variant="contained" sx={{ margin: "30px auto 0" }}>
+        <CustomInput
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInput({ password: e.target.value })
+          }
+          id="password"
+          type="text"
+        />
+        <Button
+          onClick={handleSubmit}
+          fullWidth
+          variant="contained"
+          sx={{ margin: "30px auto 0" }}
+        >
           회원가입
         </Button>
-        <Button fullWidth variant="text" sx={{ margin: "10px auto 0" }}>
-          로그인
-        </Button>
+        <Link to="/">
+          <Button fullWidth variant="text" sx={{ margin: "10px auto 0" }}>
+            로그인
+          </Button>
+        </Link>
       </CustomPaper>
     </Container>
   );

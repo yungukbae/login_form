@@ -1,32 +1,32 @@
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
-import { todoInstance } from "./axios";
-import { setInterceptors } from "./interceptors";
+import { todoInstance } from "../api/axios";
+import { setInterceptors } from "../api/interceptors";
 
 const useTodo = () => {
   const { token } = useContext(AuthContext);
   const AuthorizedInstance = setInterceptors(todoInstance, token);
 
-  function createTodo(text: string) {
+  const CreateTodo = (text: string) => {
     return AuthorizedInstance.post("/", { todo: text });
-  }
+  };
 
-  function getTodos() {
+  const GetTodos = () => {
     return AuthorizedInstance.get("/");
-  }
+  };
 
-  function updateTodo(
+  const UpdateTodo = (
     id: number,
     body: { todo: string; isCompleted: boolean }
-  ) {
+  ) => {
     return AuthorizedInstance.put(`/${id}`, body);
-  }
+  };
 
-  function deleteTodo(id: number) {
+  const DeleteTodo = (id: number) => {
     return AuthorizedInstance.delete(`/${id}`);
-  }
+  };
 
-  return { createTodo, getTodos, updateTodo, deleteTodo };
+  return { CreateTodo, GetTodos, UpdateTodo, DeleteTodo };
 };
 
 export default useTodo;

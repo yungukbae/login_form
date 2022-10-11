@@ -1,16 +1,9 @@
 import { instance } from "./axios";
 
-interface UserInput {
-  email: string;
-  password: string;
-}
+export const SignUpApi = async (input: UserInput) => {
+  return await instance.post("/auth/signup", input);
+};
 
-function SignUpUser(input: UserInput) {
-  return instance.post("/auth/signup", input);
-}
-
-function SignInUser(input: UserInput) {
+export const SignInApi = (input: UserInput) => {
   return instance.post("/auth/signin", input);
-}
-
-export { SignUpUser, SignInUser };
+};

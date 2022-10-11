@@ -1,11 +1,12 @@
 import { Button, Container, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
+
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
 
-const SignInPage = () => {
-  const { SignIn } = useContext(AuthContext);
+const SignIn = () => {
+  // const { getToken } = useContext(AuthContext);
 
   const [userInfo, setuserInfo] = useState<{ email: string; password: string }>(
     {
@@ -14,17 +15,13 @@ const SignInPage = () => {
     }
   );
 
-  const handleId = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setuserInfo({ email: e.target.value, password: userInfo.password });
-  };
-
-  const handlePW = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setuserInfo({ password: e.target.value, email: userInfo.email });
+  const handleInput = (input: { [x: string]: string }) => {
+    setuserInfo({ ...userInfo, ...input });
   };
 
   const handleSubmit = async () => {
-    const res = await SignIn(userInfo);
-    res && console.log(res);
+    // const res = await SignIn(userInfo);
+    // res && console.log(res);
   };
 
   return (
@@ -49,10 +46,21 @@ const SignInPage = () => {
           로그인
         </Typography>
         <CustomLabel>이메일</CustomLabel>
-        <CustomInput onChange={handleId} id="email" type="text" />
+        <CustomInput
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInput({ email: e.target.value })
+          }
+          id="email"
+          type="text"
+        />
         <CustomLabel>비밀번호</CustomLabel>
-        <CustomInput onChange={handlePW} id="password" type="text" />
-
+        <CustomInput
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            handleInput({ password: e.target.value })
+          }
+          id="password"
+          type="text"
+        />
         <Button
           fullWidth
           onClick={handleSubmit}
@@ -61,12 +69,14 @@ const SignInPage = () => {
         >
           로그인
         </Button>
-        <Button fullWidth variant="text" sx={{ margin: "10px auto 0" }}>
-          회원가입
-        </Button>
+        <Link to="/signup">
+          <Button fullWidth variant="text" sx={{ margin: "10px auto 0" }}>
+            회원가입
+          </Button>
+        </Link>
       </CustomPaper>
     </Container>
   );
 };
 
-export default SignInPage;
+export default SignIn;
