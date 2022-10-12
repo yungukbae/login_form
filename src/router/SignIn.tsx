@@ -1,13 +1,19 @@
 import { Button, Container, Typography } from "@mui/material";
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../context/AuthProvider";
+import { AxiosResponse } from "axios";
+import { useState } from "react";
+import { Link, redirect } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { validateEmail, validatePassword } from "../util/validation";
 
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
 
 const SignIn = () => {
-  // const { getToken } = useContext(AuthContext);
-
+  const { loginApi } = useAuth();
+  const [valid, setValid] = useState<{ email: boolean; password: boolean }>({
+    email: false,
+    password: false,
+  });
+  const btnState = valid.email && valid.password;
   const [userInfo, setuserInfo] = useState<{ email: string; password: string }>(
     {
       email: "",
@@ -16,12 +22,24 @@ const SignIn = () => {
   );
 
   const handleInput = (input: { [x: string]: string }) => {
+    const key = Object.keys(input)[0];
+    if (key === "email") {
+      setValid({ ...valid, email: validateEmail(input[key]) });
+    } else {
+      setValid({ ...valid, password: validatePassword(input[key]) });
+    }
     setuserInfo({ ...userInfo, ...input });
   };
 
   const handleSubmit = async () => {
-    // const res = await SignIn(userInfo);
-    // res && console.log(res);
+    try {
+      const result = await loginApi(userInfo);
+      if(result as any){
+          
+      }
+    } catch (e) {
+      alert("로그인에 실패하였습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -63,6 +81,7 @@ const SignIn = () => {
         />
         <Button
           fullWidth
+          disabled={!btnState}
           onClick={handleSubmit}
           variant="contained"
           sx={{ margin: "30px auto 0" }}

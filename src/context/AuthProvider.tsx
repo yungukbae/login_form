@@ -1,10 +1,11 @@
+import { AxiosResponse } from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { SignUpApi, SignInApi } from "../api/auth";
 
 export const AuthContext = createContext({
   token: "",
-  SignIn: (input: UserInput) => {},
-  SignUp: (input: UserInput) => {},
+  loginApi: (input: UserInput) => {},
+  registerApi: (input: UserInput) => {},
 });
 
 const USER_INFO = "USER_INFO";
@@ -13,13 +14,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string>("");
   const localStrage = window.localStorage;
 
-  const SignIn = async (input: UserInput) => {
+  const loginApi = async (input: UserInput) => {
     const response = await SignInApi(input);
     getToken(response.data.access_token);
     return response;
   };
 
-  const SignUp = async (input: UserInput) => {
+  const registerApi = async (input: UserInput) => {
     const response = await SignUpApi(input);
     getToken(response.data.access_token);
     return response;
@@ -37,7 +38,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  const state = { token, SignIn, SignUp };
+  const state = { token, loginApi, registerApi };
 
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
 };

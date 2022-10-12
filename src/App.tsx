@@ -22,13 +22,35 @@ const RequireAuth = ({ children }: { children: JSX.Element }) => {
   return children;
 };
 
+const EmptyToken = ({ children }: { children: JSX.Element }) => {
+  const { token } = useContext(AuthContext);
+  const location = useLocation();
+
+  if (token) return <Navigate to="/todos" state={{ from: location }} replace />;
+  return children;
+};
+
 function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<SignInPage />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/"
+            element={
+              <EmptyToken>
+                <SignInPage />
+              </EmptyToken>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <EmptyToken>
+                <SignUp />
+              </EmptyToken>
+            }
+          />
           <Route
             path="/todos"
             element={

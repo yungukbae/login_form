@@ -1,25 +1,40 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
 import { Button, Container, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { validateEmail, validatePassword } from "../util/validation";
 
 const SignUp = () => {
+  const { registerApi } = useAuth();
+  const [valid, setValid] = useState<{ email: boolean; password: boolean }>({
+    email: false,
+    password: false,
+  });
+  const btnState = valid.email && valid.password;
   const [userInfo, setuserInfo] = useState<{ email: string; password: string }>(
     {
       email: "",
       password: "",
     }
   );
-  const auth = useAuth();
 
   const handleInput = (input: { [x: string]: string }) => {
+    const key = Object.keys(input)[0];
+    if (key === "email") {
+      setValid({ ...valid, email: validateEmail(input[key]) });
+    } else {
+      setValid({ ...valid, password: validatePassword(input[key]) });
+    }
     setuserInfo({ ...userInfo, ...input });
   };
 
   const handleSubmit = async () => {
-    const res = await auth.SignUp(userInfo);
-    console.log(res);
+    try {
+      const res = await registerApi(userInfo);
+    } catch (e) {
+      alert("로그인에 실패하였습니다. 다시 시도해주세요.");
+    }
   };
 
   return (
@@ -60,8 +75,9 @@ const SignUp = () => {
           type="text"
         />
         <Button
-          onClick={handleSubmit}
           fullWidth
+          disabled={!btnState}
+          onClick={handleSubmit}
           variant="contained"
           sx={{ margin: "30px auto 0" }}
         >
