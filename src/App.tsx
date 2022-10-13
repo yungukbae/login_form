@@ -24,7 +24,7 @@ const EmptyToken = ({ children }: { children: JSX.Element }) => {
   const { token } = useContext(AuthContext);
   const location = useLocation();
 
-  if (token) return <Navigate to="/todos" state={{ from: location }} replace />;
+  if (token) return <Navigate to="/todo" state={{ from: location }} replace />;
   return children;
 };
 
@@ -50,7 +50,7 @@ function App() {
             }
           />
           <Route
-            path="/todos"
+            path="/todo"
             element={
               <RequireAuth>
                 <TodoContainer />

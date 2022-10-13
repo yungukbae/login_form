@@ -10,7 +10,7 @@ const NotFound = () => {
     const handleCount = setInterval(() => {
       setTime((x) => {
         if (x === 0) {
-          navigate(-1);
+          navigate("/todo");
           return x;
         }
         return x - 1;
@@ -46,10 +46,9 @@ const NotFound = () => {
             width: "100%",
             height: "100px",
             textAlign: "center",
-            lineHeight: "100px",
           }}
         >
-          잘못된 접근입니다. {time}초후 이전 페이지로 이동합니다.
+          잘못된 접근입니다. {time}초후 메인(또는 로그인) 페이지로 이동합니다.
         </Typography>
       </CustomPaper>
     </Container>
