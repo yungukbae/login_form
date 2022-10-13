@@ -32,6 +32,7 @@ const SignUp = () => {
   const handleSubmit = async () => {
     try {
       const res = await registerApi(userInfo);
+      console.log(res);
     } catch (e) {
       alert("로그인에 실패하였습니다. 다시 시도해주세요.");
     }
@@ -72,7 +73,7 @@ const SignUp = () => {
             handleInput({ password: e.target.value })
           }
           id="password"
-          type="text"
+          type="password"
         />
         <Button
           fullWidth
@@ -81,7 +82,7 @@ const SignUp = () => {
           variant="contained"
           sx={{ margin: "30px auto 0" }}
         >
-          회원가입
+          회원가입(로그인)
         </Button>
         <Link to="/">
           <Button fullWidth variant="text" sx={{ margin: "10px auto 0" }}>

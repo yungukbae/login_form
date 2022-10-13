@@ -1,18 +1,16 @@
-import { Children, useContext, useState } from "react";
+import { useContext } from "react";
 import AuthProvider, { AuthContext } from "./context/AuthProvider";
 import {
   BrowserRouter,
-  Link,
   Navigate,
-  redirect,
   Route,
-  RouteProps,
   Routes,
   useLocation,
 } from "react-router-dom";
 import SignInPage from "./router/SignIn";
 import SignUp from "./router/SingUp";
 import TodoContainer from "./router/todo/TodoContainer";
+import NotFound from "./router/NotFound";
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { token } = useContext(AuthContext);
@@ -59,6 +57,7 @@ function App() {
               </RequireAuth>
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

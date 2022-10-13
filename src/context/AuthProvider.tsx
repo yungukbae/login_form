@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import React, { createContext, useEffect, useState } from "react";
 import { SignUpApi, SignInApi } from "../api/auth";
 
@@ -36,7 +35,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     if (getUserInfo) {
       setToken(getUserInfo);
     }
-  }, []);
+  }, [localStrage]);
 
   const state = { token, loginApi, registerApi };
 

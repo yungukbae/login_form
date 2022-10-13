@@ -1,10 +1,8 @@
 import { Button, Container, Typography } from "@mui/material";
-import { AxiosResponse } from "axios";
 import { useState } from "react";
-import { Link, redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { validateEmail, validatePassword } from "../util/validation";
-
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
 
 const SignIn = () => {
@@ -34,8 +32,7 @@ const SignIn = () => {
   const handleSubmit = async () => {
     try {
       const result = await loginApi(userInfo);
-      if(result as any){
-          
+      if (result as any) {
       }
     } catch (e) {
       alert("로그인에 실패하였습니다. 다시 시도해주세요.");
@@ -77,7 +74,7 @@ const SignIn = () => {
             handleInput({ password: e.target.value })
           }
           id="password"
-          type="text"
+          type="password"
         />
         <Button
           fullWidth
