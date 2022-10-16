@@ -31,9 +31,7 @@ const SignIn = () => {
 
   const handleSubmit = async () => {
     try {
-      const result = await loginApi(userInfo);
-      if (result as any) {
-      }
+      await loginApi(userInfo);
     } catch (e) {
       alert("로그인에 실패하였습니다. 다시 시도해주세요.");
     }

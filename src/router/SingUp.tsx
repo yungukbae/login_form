@@ -31,8 +31,7 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     try {
-      const res = await registerApi(userInfo);
-      console.log(res);
+      await registerApi(userInfo);
     } catch (e) {
       alert("로그인에 실패하였습니다. 다시 시도해주세요.");
     }
