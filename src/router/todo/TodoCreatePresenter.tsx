@@ -12,11 +12,10 @@ const TodoCreatePresenter: React.FC<Props> = ({ handleCreate }) => {
   const [input, setInput] = useState<string>("");
 
   const handleSubmit = async () => {
-    const res = await handleCreate(input);
-    if (res && res.status >= 400) {
-      alert("수정에 실패하였습니다.");
-    } else {
-      setInput("");
+    try {
+      await handleCreate(input);
+    } catch (e) {
+      console.log("에러발쉥");
     }
   };
 

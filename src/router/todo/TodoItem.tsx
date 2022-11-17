@@ -30,22 +30,25 @@ const TodoItem: React.FC<Props> = ({ item, handleDelete, handleUpdate }) => {
   };
 
   const handleCheckBox = async (isChecked: boolean) => {
-    const res = await handleUpdate(item.id, {
-      todo: item.todo,
-      isCompleted: isChecked,
-    });
-    if (res) {
-      res.status >= 400 && alert("수정에 실패하였습니다.");
+    try {
+      await handleUpdate(item.id, {
+        todo: item.todo,
+        isCompleted: isChecked,
+      });
+    } catch (e) {
+      alert("수정에 실패하였습니다.");
     }
   };
 
   const handleSubmit = async () => {
-    const res = await handleUpdate(item.id, {
-      todo: value,
-      isCompleted: item.isCompleted,
-    });
-    if (res) {
-      !(res.status >= 400) && handleState();
+    try {
+      await handleUpdate(item.id, {
+        todo: value,
+        isCompleted: item.isCompleted,
+      });
+      handleState();
+    } catch (e) {
+      console.log(e);
     }
   };
 

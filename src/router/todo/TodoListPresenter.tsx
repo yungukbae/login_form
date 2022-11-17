@@ -35,13 +35,13 @@ const TodoListPresenter: React.FC<Props> = ({
     >
       {data.map((v) => {
         return (
-          <React.Fragment key={v.id}>
+          <div key={v.id} data-testid="testBlock">
             <TodoItem
               item={v}
               handleDelete={handleDelete}
               handleUpdate={handleUpdate}
             />
-          </React.Fragment>
+          </div>
         );
       })}
     </Box>
