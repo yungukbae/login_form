@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import TodoCreatePresenter from "./TodoCreatePresenter";
+import TodoCreatePresenter from "../TodoCreatePresenter";
 
 describe("TodoCreatePresenter", () => {
   let item = { id: 1, todo: "", isChecked: false, userId: 1 };

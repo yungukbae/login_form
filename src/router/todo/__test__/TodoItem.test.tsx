@@ -1,8 +1,8 @@
 import { render, screen, renderHook } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
-import TodoItem from "./TodoItem";
-import useTodo from "../../hooks/useTodo";
+import TodoItem from "../TodoItem";
+import useTodo from "../../../hooks/useTodo";
 
 // const mockFn = jest.fn();
 
