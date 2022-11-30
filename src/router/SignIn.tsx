@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { validateEmail, validatePassword } from "../util/validation";
 import { CustomInput, CustomLabel, CustomPaper } from "./style";
-import { pic } from "./assests/index";
 
 const SignIn = () => {
   const { loginApi } = useAuth();
@@ -48,7 +47,6 @@ const SignIn = () => {
       }}
     >
       <CustomPaper sx={{ width: "400px" }}>
-        <img src={pic} alt="" />
         <Typography
           variant="h4"
           sx={{
