@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomPaper } from "./style";
 
-const NotFound = (props: { callback?: () => void }) => {
+const NotFound = () => {
   const [time, setTime] = useState(5);
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleCount = setInterval(() => {
       setTime((x) => {
-        props.callback && props.callback();
+        // props.callback && props.callback();
         if (x === 0) {
           navigate("/todo");
           return x;

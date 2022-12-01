@@ -1,37 +1,63 @@
 import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Router } from "react-router-dom";
 import NotFound from "../NotFound";
+import { createMemoryHistory } from "history";
+import App from "../../App";
 
-// let callback = jest.fn();
-//
 beforeEach(() => {
-  jest.useFakeTimers({ timerLimit: 5000 });
+  jest.useFakeTimers();
 });
 
 afterEach(() => {
-  // callback.mockRestore();
   jest.runOnlyPendingTimers();
   jest.useRealTimers();
 });
 
 describe("NotFound", () => {
   test("UI Test", async () => {
-    const callback = jest.fn();
     await act(async () => {
       await render(
         <MemoryRouter initialEntries={["/notfound"]}>
-          <NotFound callback={callback} />
+          <NotFound />
         </MemoryRouter>
       );
     });
 
-    await act(() => {
-      jest.advanceTimersByTime(1000);
-      jest.advanceTimersByTime(1000);
-      jest.advanceTimersByTime(1000);
+    await act(async () => {
+      await jest.advanceTimersByTime(1000);
+      await jest.advanceTimersByTime(1000);
+      await jest.advanceTimersByTime(1000);
     });
-    await expect(callback).toHaveBeenCalledTimes(3);
-    await screen.debug();
+
+    await expect(screen.getByText("Page Not Found")).toBeInTheDocument();
+    await expect(
+      screen.getByText(
+        "잘못된 접근입니다. 2초후 메인(또는 로그인) 페이지로 이동합니다."
+      )
+    ).toBeInTheDocument();
+  });
+
+  test("useNavigation test", async () => {
+    const history = createMemoryHistory();
+    history.push("/");
+    history.push("/notfound");
+    const { rerender } = render(
+      <Router location={history.location} navigator={history}>
+        <App />
+      </Router>
+    );
+    expect(screen.getByText("Page Not Found")).toBeInTheDocument();
+    await act(async () => {
+      await jest.advanceTimersByTime(1000);
+      await jest.advanceTimersByTime(1000);
+      await jest.advanceTimersByTime(1000);
+    });
+    history.back();
+    rerender(
+      <Router location={history.location} navigator={history}>
+        <App />
+      </Router>
+    );
   });
 });

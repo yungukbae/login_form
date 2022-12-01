@@ -58,7 +58,8 @@ const SignIn = () => {
         >
           로그인
         </Typography>
-        <CustomLabel>이메일</CustomLabel>
+        <label htmlFor=""></label>
+        <CustomLabel name="email">이메일</CustomLabel>
         <CustomInput
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({ email: e.target.value })
@@ -66,7 +67,7 @@ const SignIn = () => {
           id="email"
           type="text"
         />
-        <CustomLabel>비밀번호</CustomLabel>
+        <CustomLabel name="password">비밀번호</CustomLabel>
         <CustomInput
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             handleInput({ password: e.target.value })

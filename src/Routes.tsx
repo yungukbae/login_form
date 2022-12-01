@@ -1,6 +1,6 @@
 import React from "react";
 import { useContext } from "react";
-import AuthProvider, { AuthContext } from "./context/AuthProvider";
+import { AuthContext } from "./context/AuthProvider";
 import {
   Navigate,
   Route,
