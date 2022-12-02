@@ -11,6 +11,7 @@ import SignInPage from "./router/SignIn";
 import SignUp from "./router/SingUp";
 import TodoContainer from "./router/todo/TodoContainer";
 import NotFound from "./router/NotFound";
+import MswTest from "./router/todo/MswTest";
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const { token } = useContext(AuthContext);
@@ -39,6 +40,7 @@ const Routes = () => {
           </EmptyToken>
         }
       />
+      <Route path="/test" element={<MswTest />} />
       <Route
         path="/signup"
         element={

@@ -10,7 +10,6 @@ const NotFound = () => {
   useEffect(() => {
     const handleCount = setInterval(() => {
       setTime((x) => {
-        // props.callback && props.callback();
         if (x === 0) {
           navigate("/todo");
           return x;
