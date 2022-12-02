@@ -4,22 +4,30 @@ const MswTest = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     (async () => {
-      const { data } = await axios.get(
-        "https://jsonplaceholder.typicode.com/posts"
-      );
-      setData(data);
+      try {
+        const { data } = await axios.get(
+          "https://jsonplaceholder.typicode.com/posts"
+        );
+        setData(data);
+      } catch (e) {
+        setData(null);
+      }
     })();
   }, []);
 
   return (
     <>
-      {data.map((v: { id: number; title: string; body: string }) => {
-        return (
-          <div key={v.title} role="article">
-            {v.title}
-          </div>
-        );
-      })}
+      {data ? (
+        data.map((v: { id: number; title: string; body: string }) => {
+          return (
+            <div key={v.title} role="article">
+              {v.title}
+            </div>
+          );
+        })
+      ) : (
+        <div>error</div>
+      )}
     </>
   );
 };
