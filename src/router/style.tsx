@@ -1,5 +1,4 @@
-import styled from "@emotion/styled";
-import { Paper, TextField, Typography, styled as muiSt } from "@mui/material";
+import { Paper, TextField, styled as muiSt } from "@mui/material";
 import { ReactNode } from "react";
 
 export const CustomPaper = muiSt(Paper)(({ theme }) => ({

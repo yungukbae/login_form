@@ -11,7 +11,7 @@ test("render correctly", async () => {
 
 test("renders error", async () => {
   server.use(
-    rest.get("https://jsonplaceholder.typicode.com/posts", (req, res, ctx) => {
+    rest.get("https://jsonplaceholder.typicode.com/posts", (_req, res, ctx) => {
       return res(ctx.status(500));
     })
   );

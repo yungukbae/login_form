@@ -16,22 +16,20 @@ afterEach(() => {
 
 describe("NotFound", () => {
   test("UI Test", async () => {
-    await act(async () => {
-      await render(
-        <MemoryRouter initialEntries={["/notfound"]}>
-          <NotFound />
-        </MemoryRouter>
-      );
-    });
+    render(
+      <MemoryRouter initialEntries={["/notfound"]}>
+        <NotFound />
+      </MemoryRouter>
+    );
 
     await act(async () => {
-      await jest.advanceTimersByTime(1000);
-      await jest.advanceTimersByTime(1000);
-      await jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
     });
 
-    await expect(screen.getByText("Page Not Found")).toBeInTheDocument();
-    await expect(
+    expect(screen.getByText("Page Not Found")).toBeInTheDocument();
+    expect(
       screen.getByText(
         "잘못된 접근입니다. 2초후 메인(또는 로그인) 페이지로 이동합니다."
       )
@@ -49,9 +47,9 @@ describe("NotFound", () => {
     );
     expect(screen.getByText("Page Not Found")).toBeInTheDocument();
     await act(async () => {
-      await jest.advanceTimersByTime(1000);
-      await jest.advanceTimersByTime(1000);
-      await jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
+      jest.advanceTimersByTime(1000);
     });
     history.back();
     rerender(

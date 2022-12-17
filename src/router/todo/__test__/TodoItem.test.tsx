@@ -1,8 +1,9 @@
-import { render, screen, renderHook } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
+// import userEvent from "@testing-library/user-event";
+
 import TodoItem from "../TodoItem";
-import useTodo from "../../../hooks/useTodo";
 
 // const mockFn = jest.fn();
 
@@ -47,7 +48,7 @@ describe("TodoItem", () => {
       />
     );
     const modBtnEl = screen.getByRole("button", { name: "수정" });
-    await userEvent.click(modBtnEl);
+    userEvent.click(modBtnEl);
 
     const inputEl = screen.getByRole("textbox");
     const btnEl = screen.getAllByRole("button");
@@ -64,24 +65,23 @@ describe("TodoItem", () => {
       />
     );
     const modBtnEl = screen.getByRole("button", { name: "수정" });
-    await userEvent.click(modBtnEl);
+    userEvent.click(modBtnEl);
 
     const inputEl = screen.getByRole("textbox");
-    await userEvent.clear(inputEl);
-    await userEvent.type(inputEl, "test");
+    userEvent.clear(inputEl);
+    userEvent.type(inputEl, "test");
     expect(inputEl).toHaveValue("test");
 
     const saveBtnEl = screen.getByRole("button", { name: "저장" });
     await act(async () => {
-      await userEvent.click(saveBtnEl);
+      userEvent.click(saveBtnEl);
     });
 
-    const savedEl = screen.getByText("test");
-    expect(savedEl).toBeInTheDocument();
+    screen.getByText("test");
 
     const checkBoxEl = screen.getByRole("checkbox");
     expect(checkBoxEl).toBeInTheDocument();
-    await userEvent.click(checkBoxEl);
+    userEvent.click(checkBoxEl);
     expect(item.isCompleted).toBe(true);
   });
 });
